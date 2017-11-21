@@ -15,8 +15,8 @@ end
 km_per_unit = 38.57/(sqrt(x(end)^2 + y(end)^2));
 km_length = length_lin * km_per_unit;
 
-z = [2000; 4000; 10000]; % input distances of checkpoints in metres here, the plot will
-                         % show you where on the course this distance is located
+z = [0; 0.1; 1]; % input distances of checkpoints as percent here, the plot will
+                 % show you where on the course this distance is located
 
 checkpoint_location = marathon_mapping(z, x, y, length_lin);
 plot(checkpoint_location(:,1), checkpoint_location(:,2), 'c*', 'MarkerSize', 15);
