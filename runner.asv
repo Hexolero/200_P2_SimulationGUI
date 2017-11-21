@@ -9,10 +9,10 @@ classdef runner < handle
         
         beta_factor % percentage of velocity to vary by over time
         volatility % beta_factor * vel_avg (amount of velocity to vary by)
-        vel_min % minimum velocity (
-        vel_max
+        vel_min % minimum velocity
+        vel_max % maximum velocity
         
-        drone_view
+        drone_view % drone's interpolation of runner variables
     end
     
     methods
@@ -32,10 +32,16 @@ classdef runner < handle
         end
         % note - r is the return value
         % use dot notation and obj is the current instance of class
-        function update(obj, delta)
+        function r = update(obj, delta)
             % wrapper method for runner update methods
             obj.update_velocity();
             obj.update_position(delta);
+            % return whether this runner should be removed from the race
+            if obj.position >= 1
+                r = true;
+            else
+                r = false;
+            end
         end
         function update_velocity(obj)
             % increment velocity by random value between +-volatility and
@@ -46,7 +52,17 @@ classdef runner < handle
             if obj.vel_curr < obj.vel_min, obj.vel_curr = obj.vel_min; end
         end
         function update_position(obj, delta)
+            % store current (will be previous) position before incrementing
+            prev_pos = obj.position;
             % increment runner position based on velocity
+            obj.position = obj.position + (obj.vel_curr * delta);
+            
+            % check to see if runner crossed checkpoint
+            for point = checkpoints
+                if (point - prev_pos) * (point - obj.position) < 0
+                    %
+                end
+            end
         end
     end
     

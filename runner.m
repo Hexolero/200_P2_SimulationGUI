@@ -52,8 +52,35 @@ classdef runner < handle
             if obj.vel_curr < obj.vel_min, obj.vel_curr = obj.vel_min; end
         end
         function update_position(obj, delta)
+            % store current (will be previous) position before incrementing
+            prev_pos = obj.position;
             % increment runner position based on velocity
+            obj.position = obj.position + (obj.vel_curr * delta);
             
+            % store value which says whether we crossed a checkpoint
+            crossed_checkpoint = false;
+            % check to see if runner crossed a checkpoint
+            for i=1:length(checkpoints)
+                point = checkpoints(i);
+                if (point - prev_pos) * (point - obj.position) < 0
+                    % we have crossed this checkpoint
+                    crossed_checkpoint = true;
+                    obj.drone_view(1) = point; % drone interpolated position
+                    % drone interpolated velocity
+                    obj.drone_view(2) = (point - obj.drone_view(3)) / obj.drone_view(4);
+                    obj.drone_view(3) = point; % most recent checkpoint
+                    obj.drone_view(4) = 0; % time since most recent checkpoint
+                    
+                    break; % exit the loop
+                end
+            end
+            if ~crossed_checkpoint
+                % we did not cross a checkpoint
+                % update interpolated position
+                obj.drone_view(1) = obj.drone_view(1) + (obj.drone_view(2) * delta);
+                % update elapsed time since most recent checkpoint
+                obj.drone_view(4) = obj.drone_view(4) + delta;
+            end
         end
     end
     
