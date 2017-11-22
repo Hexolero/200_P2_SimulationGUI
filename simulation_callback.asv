@@ -15,7 +15,10 @@ distribution_algorithm(0.02);
 if ~isempty(gui_handle)
     handles = guidata(gui_handle)
     if ~isempty(handles)
-        axis(handles.axes1,[runners(end).position runners(1).position 0 1]);
+        %xdata = get(handles.hPlot, 'XData');
+        %ydata = sin(simulation_delta * xdata) + cos(simulation_delta * xdata);
+        %set(handles.hPlot, 'YData', ydata);
+        axis(handles.hPlo,[runners(end).position runners(1).position 0 1]);
         pos = zeros(1, length(runners));
         for i=1:length(runners)
             pos(i) = runners(i).position;

@@ -22,7 +22,7 @@ function varargout = p2_GUI(varargin)
 
 % Edit the above text to modify the response to help p2_GUI
 
-% Last Modified by GUIDE v2.5 16-Nov-2017 09:50:19
+% Last Modified by GUIDE v2.5 22-Nov-2017 16:10:14
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -124,8 +124,8 @@ function simulatebutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-handles.hPlot = plot(NaN, NaN); % initialize data plot
-set(handles.hPlot,'XData', [0:0.01:1]);
+handles.hPlot = plot(NaN, NaN, '.'); % initialize data plot
+axis(handles.axes1, [0 3e-3 0 1]);
 
 % start a timer to periodically update the simulation
 handles.simulate_timer = timer( 'Name','SimulationTimer',       ...
@@ -133,14 +133,14 @@ handles.simulate_timer = timer( 'Name','SimulationTimer',       ...
                                 'StartDelay',0,                 ... 
                                 'TasksToExecute',inf,           ... 
                                 'ExecutionMode','fixedSpacing', ...
-                       'TimerFcn',{@simulation_callback,handles.figure1});
+                                'TimerFcn',{@simulation_callback,handles.figure1});
 guidata(hObject, handles);
 
 % before simulation starts, clear persistent variables from the simulation
 clear global simulation_delta;
 
 % initialize relevant global data
-initialize_simulation(1000, 50);
+initialize_simulation(100, 50); % 1000 RUNNERS, 50 DRONES
 
 % start the primary simulation timer
 start(handles.simulate_timer);

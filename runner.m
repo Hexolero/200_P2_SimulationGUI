@@ -52,6 +52,9 @@ classdef runner < handle
             if obj.vel_curr < obj.vel_min, obj.vel_curr = obj.vel_min; end
         end
         function update_position(obj, delta)
+            % declare that you're using global variables
+            global checkpoints;
+            
             % store current (will be previous) position before incrementing
             prev_pos = obj.position;
             % increment runner position based on velocity
