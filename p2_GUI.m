@@ -139,5 +139,8 @@ guidata(hObject, handles);
 % before simulation starts, clear persistent variables from the simulation
 clear global simulation_delta;
 
+% initialize relevant global data
+initialize_simulation(1000, 50);
+
 % start the primary simulation timer
 start(handles.simulate_timer);
