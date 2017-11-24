@@ -22,7 +22,7 @@ function varargout = p2_GUI(varargin)
 
 % Edit the above text to modify the response to help p2_GUI
 
-% Last Modified by GUIDE v2.5 22-Nov-2017 16:10:14
+% Last Modified by GUIDE v2.5 22-Nov-2017 17:18:57
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -125,11 +125,13 @@ function simulatebutton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 handles.hPlot = plot(NaN, NaN, '.'); % initialize data plot
-axis(handles.axes1, [0 3e-3 0 1]);
+axis(handles.axes1, [0 3e-2 0 1]);
 
+global frame_delta;
+frame_delta = 1.0;
 % start a timer to periodically update the simulation
 handles.simulate_timer = timer( 'Name','SimulationTimer',       ...
-                                'Period',0.02,                  ... 
+                                'Period', 0.05,           ... 
                                 'StartDelay',0,                 ... 
                                 'TasksToExecute',inf,           ... 
                                 'ExecutionMode','fixedSpacing', ...
@@ -140,7 +142,61 @@ guidata(hObject, handles);
 clear global simulation_delta;
 
 % initialize relevant global data
-initialize_simulation(100, 50); % 1000 RUNNERS, 50 DRONES
+initialize_simulation(5000, 50); % 1000 RUNNERS, 50 DRONES
 
 % start the primary simulation timer
 start(handles.simulate_timer);
+
+
+% --- Executes on button press in RUNNERPOS_CHECK.
+function RUNNERPOS_CHECK_Callback(hObject, eventdata, handles)
+% hObject    handle to RUNNERPOS_CHECK (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of RUNNERPOS_CHECK
+
+
+% --- Executes on button press in ESTRUNNERPOS_CHECK.
+function ESTRUNNERPOS_CHECK_Callback(hObject, eventdata, handles)
+% hObject    handle to ESTRUNNERPOS_CHECK (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of ESTRUNNERPOS_CHECK
+
+
+% --- Executes on button press in checkbox3.
+function checkbox3_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox3
+
+
+% --- Executes on button press in checkbox4.
+function checkbox4_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox4 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox4
+
+
+% --- Executes on button press in checkbox5.
+function checkbox5_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox5
+
+
+% --- Executes on button press in checkbox6.
+function checkbox6_Callback(hObject, eventdata, handles)
+% hObject    handle to checkbox6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of checkbox6
